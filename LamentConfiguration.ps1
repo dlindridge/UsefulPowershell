@@ -22,9 +22,9 @@
 #>
 #################################################
 
-$Path = "C:\Users\dlindridge\Desktop\Unlock" # Path to image files (probably the same as the script location)
-$IconImage = "symbol.ico" # Filename for the application icon - blank for none ("")
-$BackgroundImage = "background.jpg" # Filename for the background image - blank for none ("")
+$Path = "C:\Scripts\Unlock" # Path to image files (probably the same as the script location)
+$IconImage = "LC_symbol.ico" # Filename for the application icon - blank for none ("")
+$BackgroundImage = "LC_background.jpg" # Filename for the background image - blank for none ("")
 
 ### Show or Hide Console ########################
 Add-Type -Name Window -Namespace Console -MemberDefinition '
@@ -44,7 +44,7 @@ Function ShowConsole {
     [Console.Window]::ShowWindow($PSConsole, 0)
  }
 
-ShowConsole
+HideConsole
 
 
 ### Reset Form ##################################
@@ -77,7 +77,7 @@ Function MakeForm {
     $Form.StartPosition = "WindowsDefaultLocation" # CenterScreen, Manual, WindowsDefaultLocation, WindowsDefaultBounds, CenterParent
     $Form.BackgroundImageLayout = "Tile" # None, Tile, Center, Stretch, Zoom
     $Icon = Join-Path -Path $Path -ChildPath $IconImage
-	$Background = Join-Path -Path $Path -ChildPath $BackgroundImage
+    $Background = Join-Path -Path $Path -ChildPath $BackgroundImage
     If ($IconImage -ne "" -OR $IconImage -ne $Null) { $Form.Icon = New-Object system.drawing.icon ($Icon) }
     If ($BackgroundImage -ne "" -OR $BackgroundImage -ne $Null) { $Form.BackgroundImage = [system.drawing.image]::FromFile($Background) }
     $ObjFont = New-Object System.Drawing.Font("Microsoft Sans Serif",10,[System.Drawing.FontStyle]::Regular)
