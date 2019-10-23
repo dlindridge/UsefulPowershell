@@ -25,6 +25,10 @@ Replaces FORFILES DOS command (depricated).
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
 
+### LamentConfiguration.ps1###
+Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
+theory put it closest to the user) then presents you with options to unlock the account.
+
 ### RenameFiles.ps1 ###
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
