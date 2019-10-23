@@ -7,7 +7,10 @@
 
         .PARAMETER Recipient
         The destination email address.
-    #>
+
+	.DESCRIPTION
+	Usage: .\SmtpTest.ps1 (-Server smtprelay.somedomain.net)
+#>
 
 #################################################
 <#
@@ -16,7 +19,7 @@ Just a simple SMTP relay test to validate your relay settings.
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
 Created: September 7, 2017
-Modified: October 9, 2019
+Modified: October 23, 2019
 #>
 #################################################
 
