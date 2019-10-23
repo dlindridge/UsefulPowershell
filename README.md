@@ -33,6 +33,9 @@ Get the public IP address of the machine this is run on and send it as an email 
 Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
 theory put it closest to the user) then presents you with options to unlock the account.
 
+* Includes LC_symbol.ico and LC_background.jpg
+
+
 ### RenameFiles.ps1 ###
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
