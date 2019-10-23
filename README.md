@@ -21,6 +21,10 @@ Delete files from a directory older than a specified number of days.
 Replaces FORFILES DOS command (depricated).
 
 
+### FailureToCommunicate.ps1 ###
+Lock an AD account by attempting to login with/use it one more than the Domain Lockout Policy allows.
+
+
 ### IpInfo.ps1 ###
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
