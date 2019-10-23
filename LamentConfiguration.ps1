@@ -6,15 +6,16 @@
     Lead Cenobite: We have such sights to show you!
 
     .DESCRIPTION
-    Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in theory put it
-    closest to the user) then presents you with options to unlock the account.
+    Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in theory
+    put it closest to the user) then presents you with options to unlock the account.
 #>
 #################################################
 <#
     TO-DO:
+    Progress Bar on user lookup.
     Let you choose the DC to unlock on.
     Provide the option to reset the password at the same time.
-	
+
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
     Created: October 23, 2019
