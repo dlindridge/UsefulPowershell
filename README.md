@@ -16,6 +16,11 @@ if the designated number of days has passed. If you provide a valid address to s
 4 days before the event. All Domain Controllers are queried to get the most recent login date.
 
 
+### DeleteOlderThan.ps1 ###
+Delete files from a directory older than a specified number of days.
+Replaces FORFILES DOS command (depricated).
+
+
 ### IpInfo.ps1 ###
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
@@ -39,6 +44,10 @@ as a daily scheduled task - I run mine daily at 3am.
 "Script Options" section should handle all of your customization needs, but pay particular attention to the email notification
 in the "Domain Password Notice" section if your preferred method of changing passwords is not on the client PC or your password
 requirements are different than the standard Complexity options in Active Directory.
+
+
+### SmtpTest.ps1 ###
+Simple SMTP relay test to validate your relay settings by sending an email to address specified.
 
 
 ### SortFiles.ps1 ###
