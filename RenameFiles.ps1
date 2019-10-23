@@ -10,12 +10,12 @@
 
         .PARAMETER Destination
         Destination File Name.
-		
-		.PARAMETER Action
-		"Copy" or "Rename" accepted parameters
-		
-		.USAGE
-		.\RenameFiles.ps1 -Root D:\Sort -Source folder.jpg -Destination poster.jpg -Action Copy
+
+        .PARAMETER Action
+        "Copy" or "Rename" accepted parameters
+
+        .DESCRIPTION
+        .\RenameFiles.ps1 -Root D:\Sort -Source folder.jpg -Destination poster.jpg -Action Copy
     #>
 #################################################
 <#
