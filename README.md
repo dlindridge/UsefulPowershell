@@ -1,6 +1,6 @@
-# UsefulPowershell
+# UsefulPowershell #
 An assortment of useful (and useless!) Powershell scripts I've written and am willing to share.
-
+####################
 
 ### AssaultOnHoth.ps1 ###
 A Powershell GUI form to query for all domains in your forest and present you with fields to complete. 
@@ -10,12 +10,18 @@ This is also my first foray in to the world of PSForms so any feedback is welcom
 * Includes AOH_symbol.ico and AOH_background.jpg
 
 
+### CleanSlateProtocol.ps1 ###
+Very simply it looks for when a specific user last logged in then deletes the contents of the specified directory
+if the designated number of days has passed. If you provide a valid address to send to, warnings will be sent starting
+4 days before the event. All Domain Controllers are queried to get the most recent login date.
+
+
 ### IpInfo.ps1 ###
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
 
-### ThirtySevenFlairs.ps1 ###
-Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
+### RenameFiles.ps1 ###
+Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
 
 ### Shenanigans.ps1 ###
@@ -33,3 +39,11 @@ as a daily scheduled task - I run mine daily at 3am.
 "Script Options" section should handle all of your customization needs, but pay particular attention to the email notification
 in the "Domain Password Notice" section if your preferred method of changing passwords is not on the client PC or your password
 requirements are different than the standard Complexity options in Active Directory.
+
+
+### SortFiles.ps1 ###
+Sort all files in a root directory to new folders in the same directory based on the original file name.
+
+
+### ThirtySevenFlairs.ps1 ###
+Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
