@@ -3,17 +3,17 @@ An assortment of useful (and useless!) Powershell scripts I've written and am wi
 ####################
 
 ### AssaultOnHoth.ps1 ###
-A Powershell GUI form to query for all domains in your forest and present you with fields to complete. 
-This is very much a work in progress though it will slow down for a while if I get distracted by something else (OOH! SHINEY!!)
+A Powershell GUI form to query for all domains in your forest and present you with fields to complete. This is very much a
+work in progress though it will slow down for a while if I get distracted by something else (OOH! SHINEY!!)
 This is also my first foray in to the world of PSForms so any feedback is welcome.
 
 * Includes AOH_symbol.ico and AOH_background.jpg
 
 
 ### CleanSlateProtocol.ps1 ###
-Very simply it looks for when a specific user last logged in then deletes the contents of the specified directory
-if the designated number of days has passed. If you provide a valid address to send to, warnings will be sent starting
-4 days before the event. All Domain Controllers are queried to get the most recent login date.
+Looks for when a specific user last logged in then deletes the contents of the specified directory if the designated number
+of days has passed. If you provide a valid address to send to, warnings will be sent starting 4 days before the event. All
+Domain Controllers are queried to get the most recent login date.
 
 
 ### DeleteOlderThan.ps1 ###
