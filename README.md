@@ -29,7 +29,7 @@ Lock an AD account by attempting to login with/use it one more than the Domain L
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
 
-### LamentConfiguration.ps1###
+### LamentConfiguration.ps1 ###
 Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
 theory put it closest to the user) then presents you with options to unlock the account.
 
