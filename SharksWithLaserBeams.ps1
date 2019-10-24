@@ -6,7 +6,7 @@
 
     .DESCRIPTION
     Get FSMO Role assignments and other stuff for the selected domain.
-    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\FSMO.ps1")
+    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\SharksWithLaserBeams.ps1")
 #>
 #################################################
 <#
@@ -17,7 +17,7 @@
 #>
 #################################################
 
-$Path = "C:\Users\derek\OneDrive - Corios, LLC\Documents\Scripts\UserStuff" # Path to image files (probably the same as the script location)
+$Path = "C:\Scripts\UserStuff" # Path to image files (probably the same as the script location)
 $IconImage = "symbol.ico" # Filename for the application icon - blank for none ("")
 $BackgroundImage = "background.jpg" # Filename for the background image - blank for none ("")
 
