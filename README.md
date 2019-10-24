@@ -2,7 +2,7 @@
 An assortment of useful (and useless!) Powershell scripts I've written and am willing to share.
 ####################
 
-### AssaultOnHoth.ps1 ###
+### AssaultOnHoth.ps1 ### (GUI Form)
 A Powershell GUI form to query for all domains in your forest and present you with fields to complete. This is very much a
 work in progress though it will slow down for a while if I get distracted by something else (OOH! SHINEY!!)
 This is also my first foray in to the world of PSForms so any feedback is welcome.
@@ -10,37 +10,41 @@ This is also my first foray in to the world of PSForms so any feedback is welcom
 * Includes AOH_symbol.ico and AOH_background.jpg
 
 
-### CleanSlateProtocol.ps1 ###
+### CleanSlateProtocol.ps1 ### (Command Line)
 Looks for when a specific user last logged in then deletes the contents of the specified directory if the designated number
 of days has passed. If you provide a valid address to send to, warnings will be sent starting 4 days before the event. All
 Domain Controllers are queried to get the most recent login date.
 
 
-### DeleteOlderThan.ps1 ###
+### DeleteOlderThan.ps1 ### (Command Line)
 Delete files from a directory older than a specified number of days.
 Replaces FORFILES DOS command (depricated).
 
 
-### FailureToCommunicate.ps1 ###
+### FailureToCommunicate.ps1 ### (Command Line)
 Lock an AD account by attempting to login with/use it one more than the Domain Lockout Policy allows.
 
 
-### IpInfo.ps1 ###
+### IpInfo.ps1 ### (Command Line)
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
 
-### LamentConfiguration.ps1 ###
+### LamentConfiguration.ps1 ### (GUI Form)
 Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
 theory put it closest to the user) then presents you with options to unlock the account.
 
 * Includes LC_symbol.ico and LC_background.jpg
 
 
-### RenameFiles.ps1 ###
+### RenameFiles.ps1 ### (Command Line)
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
 
-### Shenanigans.ps1 ###
+### SharksWithLaserBeams.ps1 ### (GUI Form)
+Get FSMO Role assignments and other stuff for the selected domain.
+
+
+### Shenanigans.ps1 ### (Command Line)
 This script is a bit monolithic, but it is filled with routine maintenance tasks you should be running for Active Directory
 anyways. You can pick which actions you want to run by setting the correct option in the Enable Script Actions section. I've
 tried to comment this as throughly as practical so it should make sense as you go through it. It was written as a consolidation
@@ -57,13 +61,13 @@ in the "Domain Password Notice" section if your preferred method of changing pas
 requirements are different than the standard Complexity options in Active Directory.
 
 
-### SmtpTest.ps1 ###
+### SmtpTest.ps1 ### (Command Line)
 Simple SMTP relay test to validate your relay settings by sending an email to address specified.
 
 
-### SortFiles.ps1 ###
+### SortFiles.ps1 ### (Command Line)
 Sort all files in a root directory to new folders in the same directory based on the original file name.
 
 
-### ThirtySevenFlairs.ps1 ###
+### ThirtySevenFlairs.ps1 ### (Command Line)
 Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
