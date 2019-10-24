@@ -43,6 +43,8 @@ Find files in a root directory (Recursivly) and rename or copy them to the same 
 ### SharksWithLaserBeams.ps1 ### (GUI Form)
 Get FSMO Role assignments and other stuff for the selected domain.
 
+* Includes SWL_symbol.ico and SWL_background.jpg
+
 
 ### Shenanigans.ps1 ### (Command Line)
 This script is a bit monolithic, but it is filled with routine maintenance tasks you should be running for Active Directory
