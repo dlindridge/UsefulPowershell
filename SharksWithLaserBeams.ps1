@@ -83,6 +83,7 @@ Function MakeForm {
     $adDomainsDropDownBox.Location = New-Object System.Drawing.Size(80,10)
     $adDomainsDropDownBox.Size = New-Object System.Drawing.Size(225,25)
     $adDomainsDropDownBox.Font = $ObjFont
+    $adDomainsDropDownBox.TabIndex = 1
     $adDomainsDropDownBox.DropDownStyle = "DropDownList"
     ForEach ($adDomain in $adDomains) { $adDomainsDropDownBox.Items.Add($adDomain) }
     $adDomainsDropDownBox.SelectedIndex = 0
@@ -92,17 +93,20 @@ Function MakeForm {
     $SelectDomainButton.Location = New-Object System.Drawing.Size(310,10)
     $SelectDomainButton.Size = New-Object System.Drawing.Size(111,25)
     $SelectDomainButton.Text = "Select Domain"
+    $SelectDomainButton.TabIndex = 0
     $Form.Controls.Add($SelectDomainButton)
 
     $StartOverButton = New-Object System.Windows.Forms.Button 
     $StartOverButton.Location = New-Object System.Drawing.Size(310,10)
     $StartOverButton.Size = New-Object System.Drawing.Size(111,25)
     $StartOverButton.Text = "Start Over"
+    $StartOverButton.TabIndex = 0
 
     $CancelButton1 = New-Object System.Windows.Forms.Button 
     $CancelButton1.Location = New-Object System.Drawing.Size(520,410)
     $CancelButton1.Size = New-Object System.Drawing.Size(180,50)
     $CancelButton1.Text = "Nevermind"
+    $CancelButton1.TabIndex = 2
     $CancelButton1.Add_Click({ CancelForm })
     $Form.Controls.Add($CancelButton1)
 
@@ -118,6 +122,7 @@ Function MakeForm {
     $ForestModeTextBox.Location = New-Object System.Drawing.Size(115,40)
     $ForestModeTextBox.Size = New-Object System.Drawing.Size(225,25)
     $ForestModeTextBox.Font = $ObjFont
+    $ForestModeTextBox.TabStop = $False
     $Form.Controls.Add($ForestModeTextBox)
 
     $DomainModeTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -132,6 +137,7 @@ Function MakeForm {
     $DomainModeTextBox.Location = New-Object System.Drawing.Size(115,70)
     $DomainModeTextBox.Size = New-Object System.Drawing.Size(225,25)
     $DomainModeTextBox.Font = $ObjFont
+    $DomainModeTextBox.TabStop = $False
     $Form.Controls.Add($DomainModeTextBox)
 
     $UPNSuffTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -146,6 +152,7 @@ Function MakeForm {
     $UPNSuffTextBox.Location = New-Object System.Drawing.Size(115,100)
     $UPNSuffTextBox.Size = New-Object System.Drawing.Size(225,25)
     $UPNSuffTextBox.Font = $ObjFont
+    $UPNSuffTextBox.TabStop = $False
     $Form.Controls.Add($UPNSuffTextBox)
 
     $PDCeTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -160,6 +167,7 @@ Function MakeForm {
     $PDCeTextBox.Location = New-Object System.Drawing.Size(115,130)
     $PDCeTextBox.Size = New-Object System.Drawing.Size(225,25)
     $PDCeTextBox.Font = $ObjFont
+    $PDCeTextBox.TabStop = $False
     $Form.Controls.Add($PDCeTextBox)
 
     $RIDMastTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -174,6 +182,7 @@ Function MakeForm {
     $RIDMastTextBox.Location = New-Object System.Drawing.Size(115,160)
     $RIDMastTextBox.Size = New-Object System.Drawing.Size(225,25)
     $RIDMastTextBox.Font = $ObjFont
+    $RIDMastTextBox.TabStop = $False
     $Form.Controls.Add($RIDMastTextBox)
 
     $InfMastTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -188,6 +197,7 @@ Function MakeForm {
     $InfMastTextBox.Location = New-Object System.Drawing.Size(115,190)
     $InfMastTextBox.Size = New-Object System.Drawing.Size(225,25)
     $InfMastTextBox.Font = $ObjFont
+    $InfMastTextBox.TabStop = $False
     $Form.Controls.Add($InfMastTextBox)
 
     $SchemaMastTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -202,6 +212,7 @@ Function MakeForm {
     $SchemaMastTextBox.Location = New-Object System.Drawing.Size(115,220)
     $SchemaMastTextBox.Size = New-Object System.Drawing.Size(225,25)
     $SchemaMastTextBox.Font = $ObjFont
+    $SchemaMastTextBox.TabStop = $False
     $Form.Controls.Add($SchemaMastTextBox)
 
     $NamingMastTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -216,6 +227,7 @@ Function MakeForm {
     $NamingMastTextBox.Location = New-Object System.Drawing.Size(115,250)
     $NamingMastTextBox.Size = New-Object System.Drawing.Size(225,25)
     $NamingMastTextBox.Font = $ObjFont
+    $NamingMastTextBox.TabStop = $False
     $Form.Controls.Add($NamingMastTextBox)
 
     $GlobalCatTextBoxLabel = New-Object System.Windows.Forms.Label
@@ -230,6 +242,7 @@ Function MakeForm {
     $GlobalCatListBox.Location = New-Object System.Drawing.Size(350,70) 
     $GlobalCatListBox.Size = New-Object System.Drawing.Size(350,116) 
     $GlobalCatListBox.Font = $ObjFont
+    $GlobalCatListBox.TabStop = $False
     $GlobalCatListBox.Sorted = $True
     $Form.Controls.Add($GlobalCatListBox)
 
@@ -245,6 +258,7 @@ Function MakeForm {
     $ForestSitesListBox.Location = New-Object System.Drawing.Size(350,220) 
     $ForestSitesListBox.Size = New-Object System.Drawing.Size(350,145) 
     $ForestSitesListBox.Font = $ObjFont
+    $ForestSitesListBox.TabStop = $False
     $ForestSitesListBox.Sorted = $True
     $Form.Controls.Add($ForestSitesListBox)
 
