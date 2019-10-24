@@ -1,3 +1,20 @@
+<#
+    .SYNOPSIS
+    Recursively searches defined directory to delete files and empty folders older than a specified number of days.
+    Optionally leaves a warning file behind about the temporary nature of the directory.
+
+    .PARAMETER Warning
+    Will the script leave a warning file about the temporary nature of the directory. Default is YES.
+
+    .PARAMETER Days
+    Number of days that a file can be left in this location. Default is 15.
+
+    .PARAMETER Path
+    Directory to search and remove files and folders from.
+
+    .DESCRIPTION
+    Usage: .\DeleteOlderThan.ps1 -Path D:\Some\Directory (-Warning NO) (-Days 20)
+#>
 #################################################
 <#
 Delete files from a directory older than a specified number of days.
@@ -6,16 +23,20 @@ Replaces FORFILES DOS command (depricated).
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
 Created: May 17, 2015
-Modified: October 23, 2019
+Modified: October 24, 2019
 #>
 #################################################
 
-$limitDays = 15
-$Warning = "YES" # Leave a read-only file behind that this directory is cleaned regularly?
+Param (
+    $Warning = "YES",
+    $Days = 15,
+    [Parameter(Mandatory=$True)]
+    $Path
+)
 
-$limit = (Get-Date).AddDays(-$limitDays)
-$path = "D:\SomeDirectory"
+$limitDays = $Days
 $Warning = $Warning.ToUpper()
+$limit = (Get-Date).AddDays(-$limitDays)
 
 # Delete files older than the $limit.
 Get-ChildItem -Path $path -Recurse -Force | Where-Object { !$_.PSIsContainer -and $_.CreationTime -lt $limit } | Remove-Item -Force
