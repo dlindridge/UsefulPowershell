@@ -18,8 +18,8 @@
 #################################################
 
 $Path = "C:\Scripts\UserStuff" # Path to image files (probably the same as the script location)
-$IconImage = "symbol.ico" # Filename for the application icon - blank for none ("")
-$BackgroundImage = "background.jpg" # Filename for the background image - blank for none ("")
+$IconImage = "SWL_symbol.ico" # Filename for the application icon - blank for none ("")
+$BackgroundImage = "SWL_background.jpg" # Filename for the background image - blank for none ("")
 
 ### Show or Hide Console ########################
 Add-Type -Name Window -Namespace Console -MemberDefinition '
