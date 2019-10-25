@@ -37,6 +37,11 @@ theory put it closest to the user) then presents you with options to unlock the 
 * Includes LC_symbol.ico and LC_background.jpg
 
 
+### RandomPasswordGenerator.ps1 ### (Command Line)
+Gets all enabled accounts in the domain (at the Search OU Root) and generates a random 15 character password that meets
+Microsoft AD password requirements. Generates an output CSV with the passwords assigned to each user.
+
+
 ### RenameFiles.ps1 ### (Command Line)
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
