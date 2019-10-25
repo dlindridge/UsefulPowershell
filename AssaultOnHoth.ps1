@@ -78,7 +78,7 @@ Function MakeNewForm {
 
 
 ### Cancel Form #################################
-Function CancelForm{
+Function CancelForm {
     $Form.Close()
     $Form.Dispose()
 }
@@ -99,7 +99,7 @@ Function MakeForm {
     $Form.StartPosition = "WindowsDefaultLocation" # CenterScreen, Manual, WindowsDefaultLocation, WindowsDefaultBounds, CenterParent
     $Form.BackgroundImageLayout = "Tile" # None, Tile, Center, Stretch, Zoom
     $Icon = Join-Path -Path $Path -ChildPath $IconImage
-	$Background = Join-Path -Path $Path -ChildPath $BackgroundImage
+    $Background = Join-Path -Path $Path -ChildPath $BackgroundImage
     If ($IconImage -ne "" -OR $IconImage -ne $Null) { $Form.Icon = New-Object system.drawing.icon ($Icon) }
     If ($BackgroundImage -ne "" -OR $BackgroundImage -ne $Null) { $Form.BackgroundImage = [system.drawing.image]::FromFile($Background) }
     $ObjFont = New-Object System.Drawing.Font("Microsoft Sans Serif",10,[System.Drawing.FontStyle]::Regular)
@@ -349,9 +349,9 @@ Function MakeForm {
 
     $ExpirationGroupBox = New-Object System.Windows.Forms.GroupBox
     $ExpirationGroupBox.Location = New-Object System.Drawing.Size(440,340)
-	$ExpirationGroupBox.Size = New-Object System.Drawing.Size(400,60)
+    $ExpirationGroupBox.Size = New-Object System.Drawing.Size(400,60)
     $ExpirationGroupBox.Font = $ObjFontBold
-	$ExpirationGroupBox.Enabled = $False
+    $ExpirationGroupBox.Enabled = $False
     $ExpirationGroupBox.Text = "Account Expiration"
 
     $ExpirationRadio1 = New-Object System.Windows.Forms.RadioButton
@@ -360,21 +360,21 @@ Function MakeForm {
     $ExpirationRadio1.Checked = $Thirty
     $ExpirationRadio1.Font = $ObjFont
     $ExpirationRadio1.Text = "30 Days"
- 
+
     $ExpirationRadio2 = New-Object System.Windows.Forms.RadioButton
     $ExpirationRadio2.Location = New-Object System.Drawing.Size(105,25)
     $ExpirationRadio2.Size = New-Object System.Drawing.Size(90,25)
     $ExpirationRadio2.Checked = $Sixty
     $ExpirationRadio2.Font = $ObjFont
     $ExpirationRadio2.Text = "60 Days"
- 
+
     $ExpirationRadio3 = New-Object System.Windows.Forms.RadioButton
     $ExpirationRadio3.Location = New-Object System.Drawing.Size(195,25)
     $ExpirationRadio3.Size = New-Object System.Drawing.Size(90,25)
     $ExpirationRadio3.Checked = $Ninety
     $ExpirationRadio3.Font = $ObjFont
     $ExpirationRadio3.Text = "90 Days"
- 
+
     $ExpirationRadio4 = New-Object System.Windows.Forms.RadioButton
     $ExpirationRadio4.Location = New-Object System.Drawing.Size(285,25)
     $ExpirationRadio4.Size = New-Object System.Drawing.Size(90,25)
@@ -448,7 +448,7 @@ Function MakeForm {
         $Form.Controls.Remove($adDomainsSelectButton)
         $Form.Controls.Remove($NameFormatGroupBox)
         UserNameValidation
-		RemainingInformation
+        RemainingInformation
     })
 
     ### Launch Form
@@ -493,7 +493,7 @@ Function RemainingInformation {
     $OfficePhoneTextBox.Enabled = $True
     $CellPhoneTextBox.Enabled = $True
     $FacilityDropDownBox.Enabled = $True
-	$ExpirationGroupBox.Enabled = $True
+    $ExpirationGroupBox.Enabled = $True
 
     $adGroupListBox = New-Object System.Windows.Forms.ListBox 
     $adGroupListBox.Location = New-Object System.Drawing.Size(2,100) 
@@ -513,7 +513,7 @@ Function RemainingInformation {
     If ($DomainUPN -eq "" -OR $DomainUPN -eq $Null) { $EmailText = "" }
     Else { $EmailText = $ProposedUsername + "@" + $DomainUPN }
     $EmailTextBox.Text = $EmailText
-    
+
     $UsernameTextBox.Text = $ProposedUsername
     $DisplayNameTextBox.Text = $SelectedDisplayName
 
@@ -575,7 +575,7 @@ Function RemainingInformation {
         $Script:SelectedCellPhone = $CellPhoneTextBox.Text
         $Script:SelectedFacility = $FacilityDropDownBox.SelectedItem
         UserNameValidation
-		TimeToMakeTheUser
+        TimeToMakeTheUser
     } )
 }
 
@@ -905,7 +905,6 @@ Function TimeToMakeTheUser {
 			{ $SelectedCountry -eq "ZW" } { $SelectedCellPhone = $SelectedCellPhone.Insert(0,"+263-") }
             default { $SelectedCellPhone = $SelectedCellPhone }
         }
-        
     }
 
 ### Facilities ##################################
@@ -984,7 +983,7 @@ Function TimeToMakeTheUser {
         </ul><br />
         If a mailbox was requested, creation of the new mailbox can take up to 5 hours to provision, please wait until tomorrow before sending any emails to the new user's address. If you have any questions, please submit a ticket and someone will assist you as soon as possible.
         "
-    
+
     ### Check if operation was successful
     Try {
         Get-ADUser -Server $Domain -Identity $SelectedUserName | Out-Null
