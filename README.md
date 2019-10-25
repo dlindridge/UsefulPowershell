@@ -1,6 +1,6 @@
 # UsefulPowershell #
 An assortment of useful (and useless!) Powershell scripts I've written and am willing to share.
-Check back on the regular because I'll post updates without warning as something tickles my fancy.
+Check back on the regular because I'll post updates without warning as something tickles my fancy or I figure out a solution to something.
 ####################
 
 ### AssaultOnHoth.ps1 ### (GUI Form)
