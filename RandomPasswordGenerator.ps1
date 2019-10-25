@@ -2,7 +2,7 @@
 <# 
 	Gets all enabled accounts in the domain (at the Search OU Root) and
 	generates a random 15 character password that meets Microsoft AD
-	password requirements. Generates and output CSV with the passwords
+	password requirements. Generates an output CSV with the passwords
 	assigned to each user.
  #>
 #################################################
