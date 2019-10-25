@@ -184,7 +184,6 @@ Function PopulateListbox {
     $UsersOU = $UsersOU.ToString()
     $LockedUsersSearch = Get-ADDomainController -Server $Domain -Filter * | ForEach-Object { Get-ADUser -Server $Domain -Filter * -Properties * | Where-Object {($_.DistinguishedName -NotLike $BuiltinOU)} | Where-Object {($_.DistinguishedName -NotLike $UsersOU)} | Where-Object {($_.LockedOut -eq $True)}} | Select-Object Name,SamAccountName
     $LockedUsers = ForEach ($searchEntry in $LockedUsersSearch | Group-Object SamAccountName){ $searchEntry.Group | Sort-Object -Property LastLogonTimestamp -Descending | Select-Object -First 1 }
-    $Form.Controls.Remove($PopulatingLabel)
     ### Are there locked users? If no, do the first
     If ($LockedUsers -eq $Null -OR $LockedUsers -eq "") {
         $UserListBox.Items.Add("No locked users in the $Domain domain.")
