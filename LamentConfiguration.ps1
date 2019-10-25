@@ -49,7 +49,7 @@ HideConsole
 
 
 ### Cancel Form #################################
-Function CancelForm{
+Function CancelForm {
     $Form.Close()
     $Form.Dispose()
 }
@@ -71,7 +71,7 @@ Function MakeForm {
     $Form.StartPosition = "WindowsDefaultLocation" # CenterScreen, Manual, WindowsDefaultLocation, WindowsDefaultBounds, CenterParent
     $Form.BackgroundImageLayout = "Tile" # None, Tile, Center, Stretch, Zoom
     $Icon = Join-Path -Path $Path -ChildPath $IconImage
-	$Background = Join-Path -Path $Path -ChildPath $BackgroundImage
+    $Background = Join-Path -Path $Path -ChildPath $BackgroundImage
     If ($IconImage -ne "" -OR $IconImage -ne $Null) { $Form.Icon = New-Object system.drawing.icon ($Icon) }
     If ($BackgroundImage -ne "" -OR $BackgroundImage -ne $Null) { $Form.BackgroundImage = [system.drawing.image]::FromFile($Background) }
     $ObjFont = New-Object System.Drawing.Font("Microsoft Sans Serif",10,[System.Drawing.FontStyle]::Regular)
@@ -85,7 +85,7 @@ Function MakeForm {
     $adDomainsDropDownBoxLabel.Text = "Domain:"
     $adDomainsDropDownBoxLabel.BackColor = "Transparent"
     $Form.Controls.Add($adDomainsDropDownBoxLabel)
-    
+
     [array]$adDomains = (Get-ADForest).domains
     $adDomainsDropDownBox = New-Object System.Windows.Forms.ComboBox
     $adDomainsDropDownBox.Location = New-Object System.Drawing.Size(80,10)
@@ -209,7 +209,7 @@ Function PopulateListbox {
 
 ### Random Password Generator ###################
 Function Get-RandomCharacters($length) { 
-	$characters = "1234567890abcdefghiklmnoprstuvwxyzABCDEFGHKLMNOPRSTUVWXYZ"
+    $characters = "1234567890abcdefghiklmnoprstuvwxyzABCDEFGHKLMNOPRSTUVWXYZ"
     $random = 1..$length | ForEach-Object { Get-Random -Maximum $characters.length } 
     $private:ofs="" 
     Return [String]$characters[$random]
