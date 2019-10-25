@@ -45,7 +45,7 @@ Function ShowConsole {
     [Console.Window]::ShowWindow($PSConsole, 0)
  }
 
-ShowConsole
+HideConsole
 
 
 ### Cancel Form #################################
