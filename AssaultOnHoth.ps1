@@ -32,7 +32,7 @@
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
     Created: October 7, 2019
-    Modified: October 21, 2019
+    Modified: October 25, 2019
 #>
 #################################################
 
@@ -535,7 +535,7 @@ Function RemainingInformation {
     $Script:adSelectedGroups = $adGroupListBox.SelectedItems
 
     ### Populate the manager selection box
-    $ManagerList = [System.Collections.Generic.List[object]](Get-ADUser -Server $Domain -Filter {(Enabled -eq $True) -AND (Name -NotLike "SERVICE*") -AND (Name -NotLike "*(Admin)")} -Properties * | Where-Object {($_.DistinguishedName -NotLike $UsersOU) -OR ($_.DistinguishedName -NotLike $UsersOU)} | Select-Object Name,SamAccountName | Sort-Object Name)
+    $ManagerList = [System.Collections.Generic.List[object]](Get-ADUser -Server $Domain -Filter {(Enabled -eq $True) -AND (Name -NotLike "SERVICE*") -AND (Name -NotLike "*(Admin)") -AND (Name -NotLike "*$")} -Properties * | Where-Object {($_.DistinguishedName -NotLike $UsersOU) -OR ($_.DistinguishedName -NotLike $UsersOU)} | Select-Object Name,SamAccountName | Sort-Object Name)
     If ($ManagerList -ne "" -OR $ManagerList -ne $Null) {
         $ManagerDropDownBox.ValueMember = "SamAccountName"
         $ManagerDropDownBox.DisplayMember = "Name"
