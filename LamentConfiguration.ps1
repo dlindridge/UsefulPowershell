@@ -60,7 +60,7 @@ Function MakeForm {
     ### Set form parameters
     Add-Type -AssemblyName System.Windows.Forms
     $Form = New-Object System.Windows.Forms.Form
-    $Form.Text = "Create a New Active Directory User"
+    $Form.Text = "Unlock an Active Directory User"
     $Form.Font = New-Object System.Drawing.Font("Times New Roman",10,[System.Drawing.FontStyle]::Bold)
     $Form.AutoSize = $True
     $Form.AutoSizeMode = "GrowOnly" # GrowAndShrink, GrowOnly
