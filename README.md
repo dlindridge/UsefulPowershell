@@ -18,8 +18,9 @@ Domain Controllers are queried to get the most recent login date.
 
 
 ### DangItBobby.ps1 ### (GUI Form)
-This is a GUI version of the original script by bluesole (https://bluesoul.me). I've done a little cleanup,
-but most of my effort was put into getting it into a Form.
+This is a GUI version of the original script by bluesole (https://bluesoul.me). I've done a little cleanup, but most of my
+effort was put into getting it into a Form. It looks for a user logged into an available computer on your network and
+allows you to disable active NICs. Useful if you are getting hit by a Cryptolocker attack.
 
 
 ### DeleteOlderThan.ps1 ### (Command Line)
