@@ -1,7 +1,8 @@
 <#
     .SYNOPSIS
-    This is a GUI version of the original script by bluesole (https://bluesoul.me). I've done a little cleanup,
-    but most of my effort was put into getting it into a Form.
+    This is a GUI version of the original script by bluesole (https://bluesoul.me). I've done a little cleanup, but most of my
+    effort was put into getting it into a Form. It looks for a user logged into an available computer on your network and
+    allows you to disable active NICs. Useful if you are getting hit by a Cryptolocker attack.
 
     .DESCRIPTION
     Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\DangItBobby.ps1")
@@ -10,6 +11,7 @@
 #################################################
 <#
     TO-DO: Incorporate name-pattern filtering for computers
+           Put an optional message on the target machine about what is happening
 
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
