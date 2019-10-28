@@ -90,7 +90,7 @@ Function MakeForm {
     If ($BackgroundImage -ne "" -OR $BackgroundImage -ne $Null) { $Form.BackgroundImage = [system.drawing.image]::FromFile($Background) }
     $ObjFont = New-Object System.Drawing.Font("Microsoft Sans Serif",10,[System.Drawing.FontStyle]::Regular)
     $ObjFontBold = New-Object System.Drawing.Font("Microsoft Sans Serif",10,[System.Drawing.FontStyle]::Bold)
-    $Credential = Get-Credential -Message "Please provide credentials of a user with admin permission on the target machine.`n Example: DOMAIN\admin.user" -UserName LINDRIDGE\AdminDRL
+    $Credential = Get-Credential -Message "Please provide credentials of a user with admin permission on the target machine.`n Example: DOMAIN\admin.user"
 
 
     ### Set and add form objects
