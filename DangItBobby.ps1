@@ -10,8 +10,7 @@
 #>
 #################################################
 <#
-    TO-DO: Incorporate name-pattern filtering for computers
-           Put an optional message on the target machine about what is happening
+    TO-DO: Put an optional message on the target machine about what is happening
 
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
