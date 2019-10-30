@@ -16,7 +16,7 @@
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
     Created: October 25, 2019
-    Modified: October 27, 2019
+    Modified: October 29, 2019
 #>
 #################################################
 
@@ -42,7 +42,7 @@ Function ShowConsole {
     [Console.Window]::ShowWindow($PSConsole, 0)
  }
 
-HideConsole
+ShowConsole
 
 
 ### Cancel Form #################################
@@ -132,10 +132,27 @@ Function MakeForm {
     $UserNameTextBox.Text = "SamAccountName"
     $Form.Controls.Add($UserNameTextBox)
 
+    $CompPatternTextLabel = New-Object System.Windows.Forms.Label
+    $CompPatternTextLabel.Left = 2
+    $CompPatternTextLabel.Top = 70
+    $CompPatternTextLabel.Size = New-Object System.Drawing.Size(300,25)
+    $CompPatternTextLabel.TextAlign = "MiddleLeft"
+    $CompPatternTextLabel.Text = "Computer Name Pattern:"
+    $CompPatternTextLabel.BackColor = "Transparent"
+    $Form.Controls.Add($CompPatternTextLabel)
+
+    $CompPatternTextBox = New-Object System.Windows.Forms.TextBox
+    $CompPatternTextBox.Left = 30
+    $CompPatternTextBox.Top = 100
+    $CompPatternTextBox.Size = New-Object System.Drawing.Size(273,25)
+    $CompPatternTextBox.Font = $ObjFont
+    $CompPatternTextBox.Text = "*"
+    $Form.Controls.Add($CompPatternTextBox)
+
     $ComputerListBox = New-Object System.Windows.Forms.ListBox 
     $ComputerListBox.Left = 2
-    $ComputerListBox.Top = 70
-    $ComputerListBox.Size = New-Object System.Drawing.Size(300,420) 
+    $ComputerListBox.Top = 130
+    $ComputerListBox.Size = New-Object System.Drawing.Size(300,360) 
     $ComputerListBox.Font = $ObjFont
     $ComputerListBox.Sorted = $True
     $ComputerListBox.Enabled = $False
@@ -187,6 +204,7 @@ Function MakeForm {
 
     $UserSelectButton.Add_Click({
         $ProgressBar1.Value = 0
+        $Prefix = $CompPatternTextBox.Text
         $Form.Controls.Add($ProgressBar1)
         If ($Computers -ne $Null) { Clear-Variable -Name $Computers }
         $ComputerListBox.Items.Clear()
@@ -225,7 +243,7 @@ Function MakeForm {
         $Form.Enabled = $False
         $Form.Controls.Add($PBTextLabel)
         #Start search
-        $Prefix = "*"
+        If ($Prefix -eq "") { $Prefix = "*" }
         $Computers = Get-ADComputer -Filter {Enabled -eq 'true' -and SamAccountName -like $Prefix}
         $CompCount = $Computers.Count
         $ProgressBar1.Maximum = $Computers.Count
