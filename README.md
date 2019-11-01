@@ -32,6 +32,12 @@ Replaces FORFILES DOS command (depricated).
 Lock an AD account by attempting to login with/use it one more than the Domain Lockout Policy allows.
 
 
+### FirstContact.ps1 ### (Command Line)
+Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
+signature block with OWA. Pulls data directly from Active Directory and connects to Office 365/Exchange Online
+to apply the signature and set it as default.
+
+
 ### IpInfo.ps1 ### (Command Line)
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
@@ -85,3 +91,9 @@ Sort all files in a root directory to new folders in the same directory based on
 
 ### ThirtySevenFlairs.ps1 ### (Command Line)
 Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
+
+
+### VoyageHome.ps1 ### (Command Line)
+Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
+signature block with their local Outlook client. Ideal for running as a login script to keep signature information
+current from Active Directory.
