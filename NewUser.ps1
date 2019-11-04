@@ -4,7 +4,7 @@
     Search for "### Facilities ###" to define your location addresses to use with the $Facilities array.
 
     .DESCRIPTION
-    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\NewUser\AssaultOnHoth.ps1")
+    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\NewUser\NewUser.ps1")
 #>
 #################################################
 <#
