@@ -6,7 +6,7 @@
     SamAccountName of the user to lock
 
     .DESCRIPTION
-    Usage: .\FailureToCommunicate.ps1 -SamName john.doe
+    Usage: .\LockADAccount.ps1 -SamName john.doe
 
 #>
 #################################################
