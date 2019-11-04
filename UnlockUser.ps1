@@ -4,7 +4,7 @@
     put it closest to the user) then presents you with options to unlock the account and optionally reset the password.
 
     .DESCRIPTION
-    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\LamentConfiguration.ps1")
+    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\UnlockUser.ps1")
 #>
 #################################################
 <#
