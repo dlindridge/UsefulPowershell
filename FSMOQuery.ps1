@@ -3,7 +3,7 @@
     Get FSMO Role assignments and other stuff for the selected domain.
 
     .DESCRIPTION
-    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\SharksWithLaserBeams.ps1")
+    Usage: Create a shortcut pointing to (powershell.exe -file "C:\Scripts\UserStuff\FSMOQuery.ps1")
 #>
 #################################################
 <#
