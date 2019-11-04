@@ -1,15 +1,9 @@
 # UsefulPowershell #
 An assortment of useful (and useless!) Powershell scripts I've written and am willing to share.
 Check back on the regular because I'll post updates without warning as something tickles my fancy or I figure out a solution to something.
+
+symbol.ico and background.jpg are included for optional decoration on GUI forms. Substitute appropriate image formats if you want something else.
 ####################
-
-### AssaultOnHoth.ps1 ### (GUI Form)
-A Powershell GUI form to query for all domains in your forest and present you with fields to complete. This is very much a
-work in progress though it will slow down for a while if I get distracted by something else (OOH! SHINEY!!)
-This is also my first foray in to the world of PSForms so any feedback is welcome.
-
-* Includes AOH_symbol.ico and AOH_background.jpg
-
 
 ### CleanSlateProtocol.ps1 ### (Command Line)
 Looks for when a specific user last logged in then deletes the contents of the specified directory if the designated number
@@ -28,25 +22,38 @@ Delete files from a directory older than a specified number of days.
 Replaces FORFILES DOS command (depricated).
 
 
-### FailureToCommunicate.ps1 ### (Command Line)
-Lock an AD account by attempting to login with/use it one more than the Domain Lockout Policy allows.
+### DFSRepReport.ps1 ### (Command Line)
+Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
 
 
-### FirstContact.ps1 ### (Command Line)
-Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
-signature block with OWA. Pulls data directly from Active Directory and connects to Office 365/Exchange Online
-to apply the signature and set it as default.
+### FSMOQuery.ps1 ### (GUI Form)
+Get FSMO Role assignments and other stuff for the selected domain.
 
 
 ### IpInfo.ps1 ### (Command Line)
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
 
-### LamentConfiguration.ps1 ### (GUI Form)
-Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
-theory put it closest to the user) then presents you with options to unlock the account.
+### LockADAccount.ps1 ### (Command Line)
+Lock an AD account by attempting to login with/use it one more than the Domain Lockout Policy allows.
 
-* Includes LC_symbol.ico and LC_background.jpg
+
+### NewUser.ps1 ### (GUI Form)
+A Powershell GUI form to query for all domains in your forest and present you with fields to complete. This is very much a
+work in progress though it will slow down for a while if I get distracted by something else (OOH! SHINEY!!)
+This is also my first foray in to the world of PSForms so any feedback is welcome.
+
+
+### OutlookSigUpdate.ps1 ### (Command Line)
+Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
+signature block with their local Outlook client. Ideal for running as a login script to keep signature information
+current from Active Directory.
+
+
+### OWASigUpdate.ps1 ### (Command Line)
+Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
+signature block with OWA. Pulls data directly from Active Directory and connects to Office 365/Exchange Online
+to apply the signature and set it as default.
 
 
 ### RandomPasswordGenerator.ps1 ### (Command Line)
@@ -56,12 +63,6 @@ Microsoft AD password requirements. Generates an output CSV with the passwords a
 
 ### RenameFiles.ps1 ### (Command Line)
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
-
-
-### SharksWithLaserBeams.ps1 ### (GUI Form)
-Get FSMO Role assignments and other stuff for the selected domain.
-
-* Includes SWL_symbol.ico and SWL_background.jpg
 
 
 ### Shenanigans.ps1 ### (Command Line)
@@ -89,11 +90,6 @@ Simple SMTP relay test to validate your relay settings by sending an email to ad
 Sort all files in a root directory to new folders in the same directory based on the original file name.
 
 
-### ThirtySevenFlairs.ps1 ### (Command Line)
-Queries your domain for any DFSR locations then builds a report (display or email output) with the backlog.
-
-
-### VoyageHome.ps1 ### (Command Line)
-Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
-signature block with their local Outlook client. Ideal for running as a login script to keep signature information
-current from Active Directory.
+### UnlockUser.ps1 ### (GUI Form)
+Queries your domain to find locked users and the Domain Controller that registered the most recent logon (this should in 
+theory put it closest to the user) then presents you with options to unlock the account.
