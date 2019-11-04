@@ -8,7 +8,7 @@
     YES or NO: Set the created signature blocks as active. Default is "YES".
 
     .DESCRIPTION
-    Usage:  powershell.exe -file (path)\VoyageHome.ps1 as part of a logon script.
+    Usage:  powershell.exe -file (path)\OutlookSigUpdate.ps1 as part of a logon script.
             *OR* Set PowerShell option for logon script to call the ps1 directly. Don't forget to change the logon
             script wait time, MS default is 5 minutes (!)
 #>
