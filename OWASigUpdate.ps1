@@ -8,7 +8,7 @@
 	Is MFA authentication required for your connection to Office 365/Exchange Online? Default: NO
 
     .DESCRIPTION
-    Usage: .\FirstContact.ps1 (-MFA YES).
+    Usage: .\OWASigUpdate.ps1 (-MFA YES).
 #>
 #################################################
 <#
