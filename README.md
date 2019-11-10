@@ -2,7 +2,7 @@
 An assortment of useful (and useless!) Powershell scripts I've written and am willing to share.
 Check back on the regular because I'll post updates without warning as something tickles my fancy or I figure out a solution to something.
 
-symbol.ico and background.jpg are included for optional decoration on GUI forms. Substitute appropriate image formats if you want something else.
+symbol.ico and background.jpg are included for optional decoration on GUI forms. Substitute appropriate images if you want something else.
 ####################
 
 ### CleanSlateProtocol.ps1 ### (Command Line)
