@@ -30,6 +30,10 @@ Queries your domain for any DFSR locations then builds a report (display or emai
 Get FSMO Role assignments and other stuff for the selected domain.
 
 
+### FileSearch.ps1 ### (Command Line)
+Recursively searches directory to find a file or folder either by specific name or by pattern.
+
+
 ### FindEventID.ps1 ### (Command Line)
 Looks through the event log to find a specific Event ID number and outputs results to file choice (CSV or TXT).
 
