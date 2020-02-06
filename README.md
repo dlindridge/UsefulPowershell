@@ -30,6 +30,10 @@ Queries your domain for any DFSR locations then builds a report (display or emai
 Get FSMO Role assignments and other stuff for the selected domain.
 
 
+### FindEventID.ps1 ### (Command Line)
+Looks through the event log to find a specific Event ID number and outputs results to file choice (CSV or TXT).
+
+
 ### IpInfo.ps1 ### (Command Line)
 Get the public IP address of the machine this is run on and send it as an email or place a text file somewhere.
 
