@@ -69,6 +69,13 @@ Gets all enabled accounts in the domain (at the Search OU Root) and generates a 
 Microsoft AD password requirements. Generates an output CSV with the passwords assigned to each user.
 
 
+### Rememberall.ps1 ### (Command Line)
+Do you have regular tasks for PCI-DSS or SOC2 compliance that you need to do? This script will send reminder emails to 
+your designated destination (such as your Security or IT teams) to remind them that it is time to send a particular email
+to perform a task. The tasks that you will be reminded of are specifically built with the intention of complying with
+PCI-DSS and/or SOC2 certifications.
+
+
 ### RenameFiles.ps1 ### (Command Line)
 Find files in a root directory (Recursivly) and rename or copy them to the same relative directory.
 
