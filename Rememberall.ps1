@@ -21,10 +21,10 @@ Modified: May 29, 2020
 #>
 
 ### Email Settings ##############################
-$fromAddr = "Corios IT <noreply@corios.org>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
-$toAddr = "itadmins@coriosgroup.com" # Enter the TO address for the e-mail alert - Must be inside quotes.
-$testingAddr = "dlindridge@coriosgroup.com" # Email address to send reports and alerts to when testing.
-$smtpServer = "smtp.corios.org" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
+$fromAddr = "Company IT <noreply@MyTLD.com>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
+$toAddr = "itadmins@MyTLD.com" # Enter the TO address for the e-mail alert - Must be inside quotes.
+$testingAddr = "testingAddress@MyTLD.com" # Email address to send reports and alerts to when testing.
+$smtpServer = "smtp.MyTLD.com" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
 
 
 ### Options #####################################
