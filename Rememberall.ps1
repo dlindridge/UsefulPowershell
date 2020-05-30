@@ -21,10 +21,10 @@ Modified: May 29, 2020
 #>
 
 ### Email Settings ##############################
-$fromAddr = "Company IT <noreply@MyTLD.com>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
-$toAddr = "itadmins@MyTLD.com" # Enter the TO address for the e-mail alert - Must be inside quotes.
-$testingAddr = "testingAddress@MyTLD.com" # Email address to send reports and alerts to when testing.
-$smtpServer = "smtp.MyTLD.com" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
+$fromAddr = "Company IT <noreply@MyDomain.TLD>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
+$toAddr = "itadmins@MyDomain.TLD" # Enter the TO address for the e-mail alert - Must be inside quotes.
+$testingAddr = "testingAddress@MyDomain.TLD" # Email address to send reports and alerts to when testing.
+$smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
 
 
 ### Options #####################################
