@@ -17,7 +17,7 @@ Tuesday recommended.
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
 Created: May 22, 2020
-Modified: May 29, 2020
+Modified: June 1, 2020
 #>
 
 ### Email Settings ##############################
@@ -49,9 +49,16 @@ $OffWeeks = $OffWeeks.ToUpper()
 ### Necessary Transforms ########################
 $actionDate = Get-Date -Format "dddd, d MMMM, yyyy"
 $reportDate = Get-Date -DisplayHint Date
-$weekNumber = Get-Date -UFormat %V
 $actionCount = 0
 $emailBody = @("These are your recurring reminders:<br /><br />")
+
+
+### Calculate Week Number #######################
+Function Get-WeekNumber([datetime]$DateTime = (Get-Date)) {
+    $cultureInfo = [System.Globalization.CultureInfo]::CurrentCulture
+    $cultureInfo.Calendar.GetWeekOfYear($DateTime,$cultureInfo.DateTimeFormat.CalendarWeekRule,$cultureInfo.DateTimeFormat.FirstDayOfWeek)
+}
+$weekNumber = Get-WeekNumber
 
 
 ### Annual Policy Acknowledgement ###############
