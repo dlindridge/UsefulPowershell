@@ -34,6 +34,8 @@ $FirewallReview = "YES" #Reminder to review firewall rules
 	$FRFrequency = "EVEN" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
 $AwarenessEmails = "YES" #Reminder to send awareness/training emails
 	$AEFrequency = "6" #How often - Number of weeks between sending
+$AccessReview = "YES" #Reminder to perform access reviews
+	$ACFrequency = "EVEN" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
 $OffWeeks = "YES" #Send an update email when nothing is due?
 
 
@@ -43,6 +45,8 @@ $AnnualPolicyAcknowledgement = $AnnualPolicyAcknowledgement.ToUpper()
 $FirewallReview = $FirewallReview.ToUpper()
 $FRFrequency = $FRFrequency.ToUpper()
 $AwarenessEmails = $AwarenessEmails.ToUpper()
+$AccessReview = $AccessReview.ToUpper()
+$ACFrequency = $ACFrequency.ToUpper()
 $OffWeeks = $OffWeeks.ToUpper()
 
 
@@ -104,6 +108,35 @@ If ($AwarenessEmails -eq "YES") {
 	If ($weekNumber % $AEFrequency -eq 0) {
 		$emailBody += "<b>Awareness/Training Emails:</b> Send awareness or training emails to all employees on a subject determined by your organization.<br /><br />"
 		$actionCount += 1
+	}
+}
+
+
+### Access Review ###############################
+If ($AccessReview -eq "YES") {
+	If ($ACFrequency -eq "YEARLY") {
+		If ($weekNumber -eq 2) {
+			$emailBody += "<b>Access Review:</b> Schedule the yearly access rule review meeting.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($ACFrequency -eq "EVEN") {
+		If (($weekNumber -eq 16) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Access Review:</b> Schedule the bi-yearly access rule review meeting.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($ACFrequency -eq "ODD") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 29)) {
+			$emailBody += "<b>Access Review:</b> Schedule the bi-yearly access rule review meeting.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($ACFrequency -eq "QUARTERLY") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 16) -OR ($weekNumber -eq 29) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Access Review:</b> Schedule the quarterly access rule review meeting.<br /><br />"
+			$actionCount += 1
+		}
 	}
 }
 
