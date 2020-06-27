@@ -36,7 +36,7 @@ Looks through the event log to find a specific Event ID number and outputs resul
 
 
 ### GPUpdate.ps1 ### (Command Line)
-Finds all Windows machines in the domain and executes "gpupdate /force" on them if they are online. Requires that PSExec be on the system that this script is executed from. Path to PSExec is defined at the top of the script for customization.
+Finds all Windows machines in the domain (except Domain Controllers) and executes "gpupdate /force" on them if they are online. Requires that PSExec be on the system that this script is executed from. Path to PSExec is defined at the top of the script for customization.
 
 
 ### IpInfo.ps1 ### (Command Line)
