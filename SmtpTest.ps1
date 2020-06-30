@@ -18,6 +18,7 @@ Just a simple SMTP relay test to validate your relay settings.
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
 Created: September 7, 2017
 Modified: October 23, 2019
 #>
