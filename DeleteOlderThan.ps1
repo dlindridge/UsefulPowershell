@@ -22,6 +22,7 @@ Replaces FORFILES DOS command (depricated).
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
 Created: May 17, 2015
 Modified: October 24, 2019
 #>
