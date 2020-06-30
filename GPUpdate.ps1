@@ -1,3 +1,17 @@
+#################################################
+<#
+Queries the current domain for all non-Domain Controller Windows computers and executes
+a PSExec string to force a Group Policy update. Requires PSExec be available at a defined
+path on the computer this script is run from.
+
+Author: Derek Lindridge
+https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
+Created: December 31, 2019
+Modified: June 27, 2020
+#>
+#################################################
+
 $PSTools = "C:\Scripts\PSTools\psexec.exe" # Full path to psexec on the source system
 
 #################################################
