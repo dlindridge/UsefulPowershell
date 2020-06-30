@@ -15,6 +15,7 @@ Required OS Version is 2012 or better
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
 Created: February 18, 2017
 Modified: October 26, 2019
 #>
