@@ -1,11 +1,20 @@
 #################################################
 <# 
-    .SYNOPSIS
-    Gets all enabled accounts in the domain (at the Search OU Root) and generates a random 15
-    character password that meets Microsoft AD password requirements. Generates an output CSV
-    with the passwords assigned to each user.
- #>
+    Gets all enabled accounts in the domain (at the Search OU Root) and
+    generates a random 15 character password that meets Microsoft AD
+    password requirements. Generates an output CSV with the passwords
+    assigned to each user.
+#>
 #################################################
+<#
+	Author: Derek Lindridge
+	https://www.linkedin.com/in/dereklindridge/
+	https://github.com/dlindridge/UsefulPowershell
+	Created: January 25, 2020
+	Modified: June 27,2020
+#>
+#################################################
+
 
 $domain = "MyDomain.TLD"
 $searchRoot = "OU=UserRoot,DC=MyDomain,DC=TLD"
