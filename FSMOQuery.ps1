@@ -9,6 +9,7 @@
 <#
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
+    https://github.com/dlindridge/UsefulPowershell
     Created: October 23, 2019
     Modified: October 23, 2019
 #>
