@@ -15,6 +15,7 @@
 <#
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
+    https://github.com/dlindridge/UsefulPowershell
     Created: September 23, 2019
     Modified: October 22, 2019
 #>
