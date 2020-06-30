@@ -16,6 +16,7 @@ Tuesday recommended.
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
 Created: May 22, 2020
 Modified: June 23, 2020
 #>
