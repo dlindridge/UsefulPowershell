@@ -31,6 +31,7 @@ requirements are different than the standard Complexity options in Active Direct
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
+https://github.com/dlindridge/UsefulPowershell
 Created: September 17, 2019
 Modified: October 20, 2019
 #>
