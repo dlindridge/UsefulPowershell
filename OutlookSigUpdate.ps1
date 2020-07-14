@@ -1,8 +1,6 @@
 <#
     .SYNOPSIS
-    Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
-    signature block with their local Outlook client. Ideal for running as a login script to keep signature information
-    current from Active Directory.
+	Builds a signature file for use in Outlook based on Active Directory information for the current user.
 
     .PARAMETER Active
     YES or NO: Set the created signature blocks as active. Default is "YES".
@@ -14,18 +12,18 @@
 #>
 #################################################
 <#
-    TO-DO:  Input parameters for signature template filenames.
-
     Significant help came from Chris Meeuwen with a source script for updating OWA signatures which morphed into this.
         -Chris, thanks for the source info, it gave me places to go!
     
-   	When building your signature template use the placeholders below. If the mobile/cell number is blank in AD the line
-    that contains it's placeholder is skipped. Write your signature template accordingly.
-        PS-USER-NAME = User's Full Name
-        PS-TITLE-NAME = User's Title
-        PS-OFFICE-PHONE = User's Office Phone Number
-        PS-MOBILE-PHONE = User's Cell/Mobile Phone Number
-        PS-EMAIL-ADDR = User's Email Address
+   	The HTML file used for the signature is built inline in the script below. Variables at the start of the script
+	will allow you to cusomize information for your organization and use the built-in formatting to build a nice
+	but simple signature. If you want to change the HTML code for a different look, I recommend building the signature
+	file in HTML independently then piecing lines into the code below. Be sure to pay attention to formatting calls
+	used by HTML as they will carry over line to line unless properly terminated each time.
+	
+	As written this script requires a custom AD Attribute in the user object for AWS Chime information. Modify this as
+	appropriate for your needs. See here for how to create this attribute:
+	https://social.technet.microsoft.com/wiki/contents/articles/20319.how-to-create-a-custom-attribute-in-active-directory.aspx
 
     See here for logon scripting with Powershell: http://woshub.com/running-powershell-startup-scripts-using-gpo/
     *NOTE:  Even though this is a USER policy in Group Policy, still follow the directions to add Domain Computers to 
@@ -35,107 +33,116 @@
     https://www.linkedin.com/in/dereklindridge/
     https://github.com/dlindridge/UsefulPowershell
     Created: October 30, 2019
-    Modified: October 31, 2019
+    Modified: July 14, 2020
 #>
 #################################################
-
-### Build some organization specific variables
-$MainName = "Main" # Final name of the New email signature block
-$ReplyName = "Reply" # Final name of the Reply email signature block
-$MainSignatureFile = "\\MyDomain.org\NETLOGON\EmailSig_Main.html" # Shared file location for the New/Main signature template
-$ReplySignatureFile = "\\MyDomain.org\NETLOGON\EmailSig_Reply.html" # Shared file location for the Reply signature template
-
-### There Be Script Here! #######################
 
 Param (
     $Active = "YES"
 )
-# Check to see if we can talk to the Main signature file - skip everything if we can't
-If (Test-Path $MainSignatureFile) {
-    ### Path to user's AppData folder and default signature folder for Outlook
-    $AppData = (Get-Item ENV:AppData).Value
-    $LocalSignatureFolder = $AppData+'\Microsoft\Signatures'
-    If (Test-Path $LocalSignatureFolder) { Write-Output "Signature folder already exists" } Else { New-Item -Path $LocalSignatureFolder -ItemType "Directory" -Force }
-    
-    ### Get the current logged in username
-    $UserName = (Get-Item ENV:UserName).Value
 
-    ### The Query AD and get an ADUser Object
-    $Filter = "(&(objectCategory=User)(samAccountName=$UserName))"
-    $Searcher = New-Object System.DirectoryServices.DirectorySearcher
-    $Searcher.Filter = $Filter
-    $ADUserPath = $Searcher.FindOne()
-    $SignatureUser = $ADUserPath.GetDirectoryEntry()
-    If ($SignatureUser.mobile) { $Mobile = $SignatureUser.mobile } Else { $Mobile = $Null }
+### Company Specific Information ################
+$MainName = "Main-Signature" # Final name of the New email signature block
+$ReplyName = "Reply-Signature" # Final name of the Reply email signature block
+$SocialMediaTitle = "Find us on LinkedIn" # Do you have a social media presence?
+$SocialMediaURL = "https://www.linkedin.com/company/MyCompany/" # What is your social media URL?
+$WebsiteDomain = "MyDomain.TLD" # Company public website domain
+$WebsiteURL = "https://www.MyDomain.TLD/" # URL to the public website
+$Motto = "Be the person Mr. Rogers knew you could be" # Tagline or motto
+$CompanyName = "MyCompany" # Company name
+$CompanyLogo = "https://MyDomain.TLD/email-logo.gif" # Public URL to company logo
 
-    ### Build the New email signature
-    $MainSignatureTemplate = Get-Content $MainSignatureFile
 
-    ### Generate Signature
-    $MainSignature= @()
+### There Be Script Here! #######################
 
-    ### Find the PS-*-* fields and replace those with the appropriate details.
-    ForEach ($line in $MainSignatureTemplate) {
-        If ($line -like "*PS-USER-NAME*") {
-            $MainSignature += $line.Replace("PS-USER-NAME","$($signatureUser.Name)")
-        }
-        ElseIf ($line -like "*PS-TITLE-NAME*") {
-            $MainSignature += $line.Replace("PS-TITLE-NAME","$($signatureUser.Title)")
-        }
-        ElseIf ($line -like "*PS-OFFICE-PHONE*") {
-            $MainSignature += $line.Replace("PS-OFFICE-PHONE","$($signatureUser.telephoneNumber)")
-        }
-        ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -ne "" -AND $Mobile -ne $Null)) {
-            $MainSignature += $line.Replace("PS-MOBILE-PHONE",$Mobile)
-        }
-        ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -eq "" -OR $Mobile -eq $Null)) {
-            Write-Output "No Mobile Phone Number"
-        }
-        ElseIf ($line -like "*PS-EMAIL-ADDR*") {
-            $MainSignature += $line.Replace("PS-EMAIL-ADDR","$($signatureUser.emailaddress)")
-        }
-        Else { $MainSignature += $line }
-    }
+### Get Local Info ##############################
+$AppData = (Get-Item ENV:AppData).Value
+$LocalSignatureFolder = $AppData+'\Microsoft\Signatures'
+$UserName = (Get-Item ENV:UserName).Value
+If (Test-Path $LocalSignatureFolder) { Write-Output "Signature folder already exists" } Else { New-Item -Path $LocalSignatureFolder -ItemType "Directory" -Force }
 
-    ### Save it as Main
-    $MainSignatureDest = $LocalSignatureFolder + "\" + $MainName + ".htm"
-    $MainSignature > $MainSignatureDest
 
-    ### Do it all over again for the Reply signature
-    $ReplySignatureTemplate = Get-Content $ReplySignatureFile
-    $ReplySignature= @()
+### Query AD for User Object ####################
+$Filter = "(&(objectCategory=User)(samAccountName=$UserName))"
+$Searcher = New-Object System.DirectoryServices.DirectorySearcher
+$Searcher.Filter = $Filter
+$ADUserPath = $Searcher.FindOne()
+$SignatureUser = $ADUserPath.GetDirectoryEntry()
 
-    ForEach ($line in $ReplySignatureTemplate) {
-        If ($line -like "*PS-USER-NAME*") {
-            $ReplySignature += $line.Replace("PS-USER-NAME","$($signatureUser.Name)")
-        }
-        ElseIf ($line -like "*PS-TITLE-NAME*") {
-            $ReplySignature += $line.Replace("PS-TITLE-NAME","$($signatureUser.Title)")
-        }
-        ElseIf ($line -like "*PS-OFFICE-PHONE*") {
-            $ReplySignature += $line.Replace("PS-OFFICE-PHONE","$($signatureUser.telephoneNumber)")
-        }
-        ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -ne "" -AND $Mobile -ne $Null)) {
-            $ReplySignature += $line.Replace("PS-MOBILE-PHONE",$Mobile)
-        }
-        ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -eq "" -OR $Mobile -eq $Null)) {
-            Write-Output "No Mobile Phone Number"
-        }
-        Else { $ReplySignature += $line }
-    }
 
-    ### Save it as Reply
-    $ReplySignatureDest = $LocalSignatureFolder + "\" + $ReplyName + ".htm"
-    $ReplySignature > $ReplySignatureDest
+### User Information ############################
+$UserFullName = $SignatureUser.Name
+$UserTitle = $SignatureUser.Title
+If ($SignatureUser.telephoneNumber) { $OfficePhone = $SignatureUser.telephoneNumber } Else { $OfficePhone = $Null }
+If ($SignatureUser.mobile) { $Mobile = $SignatureUser.mobile } Else { $Mobile = $Null }
+# Requires custom AD attribute called 'awsChime' in the user attributes
+If ($SignatureUser.awsChime) { $AwsChime = $SignatureUser.awsChime } Else { $AwsChime = $Null }
+$UserEmail = $SignatureUser.emailAddress
 
-    ### Set New Sigs as Active
-    $Active = $Active.ToUpper()
-    If ($Active -eq "YES") {
-        $MSWord = New-Object -ComObject word.application
-        $EmailOptions = $MSWord.EmailOptions
-        $EmailSignature = $EmailOptions.EmailSignature
-        $EmailSignature.NewMessageSignature = $MainName
-        $EmailSignature.ReplyMessageSignature = $ReplyName
-        $MSWord.Quit()
-    }
+
+### Signature Locations #########################
+$MainSignatureDest = $LocalSignatureFolder + "\" + $MainName + ".htm"
+$ReplySignatureDest = $LocalSignatureFolder + "\" + $ReplyName + ".htm"
+
+
+### Build the Main Signature ####################
+Set-Content $MainSignatureDest "<br>"
+Add-Content $MainSignatureDest "<hr size=`"3`" width=`"33%`" align=`"left`">"
+Add-Content $MainSignatureDest "<div style=`"font-size:10pt;  font-family: 'Calibri',sans-serif;`">"
+Add-Content $MainSignatureDest "<b><span style='font-size:14.0pt;color:#D34727'>$UserFullName</span></b><br>"
+Add-Content $MainSignatureDest "<span style='text-transform:uppercase'>$UserTitle</span><br>"
+Add-Content $MainSignatureDest "<div><img alt=`"$CompanyName`"  src=`"$CompanyLogo`"></div>"
+If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null)) {
+	Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Office - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$OfficePhone</span>"
+	}
+If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null) -AND ($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+	Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
+	}
+If (($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+	Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Cell - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$Mobile</span></span>"
+	}
+If (($AwsChime -ne "") -AND ($AwsChime -ne $Null)) {
+	Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
+	Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Chime - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$AwsChime</span></span>"
+	}
+Add-Content $MainSignatureDest "<br><span style='font-size:10.0pt;text-transform:lowercase'>$UserEmail | <a href=`"$SocialMediaURL`"><span style='text-transform:uppercase;color:#000001'>$SocialMediaTitle</span></a> | <a href=`"$WebsiteURL`"><b>$WebsiteDomain</b></a></span><br>"
+Add-Content $MainSignatureDest "<br>"
+Add-Content $MainSignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>$Motto</span></i> <o:p></o:p></p>"
+Add-Content $MainSignatureDest "</div>"
+
+
+### Build the Reply Signature ###################
+Set-Content $ReplySignatureDest "<br>"
+Add-Content $ReplySignatureDest "<hr size=`"3`" width=`"33%`" align=`"left`">"
+Add-Content $ReplySignatureDest "<div style=`"font-size:10pt;  font-family: 'Calibri',sans-serif;`">"
+Add-Content $ReplySignatureDest "<b><span style='font-size:14.0pt;color:#D34727'>$UserFullName</span></b><br>"
+Add-Content $ReplySignatureDest "<span style='text-transform:uppercase'>$UserTitle</span><br>"
+If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null)) {
+	Add-Content $ReplySignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Office - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$OfficePhone</span>"
+	}
+If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null) -AND ($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+	Add-Content $ReplySignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
+	}
+If (($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+	Add-Content $ReplySignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Cell - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$Mobile</span></span>"
+	}
+If (($AwsChime -ne "") -AND ($AwsChime -ne $Null)) {
+	Add-Content $ReplySignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
+	Add-Content $ReplySignatureDest "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Chime - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$AwsChime</span></span>"
+	}
+Add-Content $ReplySignatureDest "<br>"
+Add-Content $ReplySignatureDest "<br><i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>$Motto</span></i> <o:p></o:p></p>"
+Add-Content $ReplySignatureDest "</div>"
+
+
+### Set New Sigs as Active
+$Active = $Active.ToUpper()
+If ($Active -eq "YES") {
+	$MSWord = New-Object -ComObject word.application
+	$EmailOptions = $MSWord.EmailOptions
+	$EmailSignature = $EmailOptions.EmailSignature
+	$EmailSignature.NewMessageSignature = $MainName
+	$EmailSignature.ReplyMessageSignature = $ReplyName
+	$MSWord.Quit()
 }
+
