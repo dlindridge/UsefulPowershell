@@ -1,4 +1,4 @@
-﻿<#
+<#
     .SYNOPSIS
     Using an HTML template for an email signature, customize it for each user in a specified source CSV to use as a
 	signature block with OWA. Pulls data directly from Active Directory and connects to Office 365/Exchange Online
@@ -8,36 +8,41 @@
 	Is MFA authentication required for your connection to Office 365/Exchange Online? Default: NO
 
     .DESCRIPTION
-    Usage: .\OWASigUpdate.ps1 (-MFA YES).
+    Usage: .\OutlookSigUpdate.ps1 (-MFA YES).
 #>
 #################################################
 <#
-    TO-DO:  Input parameters for signature template filenames.
-
     Significant help came from Chris Meeuwen with a source script for updating OWA signatures which morphed into this.
-		-Chris, thanks for the source info, it gave me places to go!
+        -Chris, thanks for the source info, it gave me places to go!
+    
+   	The HTML file used for the signature is built inline in the script below. Variables at the start of the script
+	will allow you to cusomize information for your organization and use the built-in formatting to build a nice
+	but simple signature. If you want to change the HTML code for a different look, I recommend building the signature
+	file in HTML independently then piecing lines into the code below. Be sure to pay attention to formatting calls
+	used by HTML as they will carry over line to line unless properly terminated each time.
 	
-	When building your signature template use the placeholders below. If the mobile/cell number is blank in AD the line
-	that contains it's placeholder is skipped. Write your signature template accordingly.
-        PS-USER-NAME = User's Full Name
-        PS-TITLE-NAME = User's Title
-        PS-OFFICE-PHONE = User's Office Phone Number
-        PS-MOBILE-PHONE = User's Cell/Mobile Phone Number
-        PS-EMAIL-ADDR = User's Email Address
+	As written this script requires a custom AD Attribute in the user object for AWS Chime information. Modify this as
+	appropriate for your needs. See here for how to create this attribute:
+	https://social.technet.microsoft.com/wiki/contents/articles/20319.how-to-create-a-custom-attribute-in-active-directory.aspx
 
 	The username in the CSV file should be the user's SamAccountName in AD with the column heading "UserName"
 
     Author: Derek Lindridge
     https://www.linkedin.com/in/dereklindridge/
-    https://github.com/dlindridge/UsefulPowershell
     Created: October 30, 2019
-    Modified: October 31, 2019
+    Modified: July 14, 2020
 #>
 #################################################
 
 ### Build some organization specific variables
-$Script:SignatureFile = "\\MyDomain.org\NETLOGON\EmailSig_Main.html" # Name and Location of signature template
 $Script:Users = Import-Csv "C:\Scripts\ADUserInfo\ADUserInfo.csv" # Name and Location of user CSV list
+$Script:SocialMediaTitle = "Find us on LinkedIn" # Do you have a social media presence?
+$Script:SocialMediaURL = "https://www.linkedin.com/company/MyCompany/" # What is your social media URL?
+$Script:WebsiteDomain = "MyDomain.TLD" # Company public website domain
+$Script:WebsiteURL = "https://www.MyDomain.TLD/" # URL to the public website
+$Script:Motto = "Be the person Mr. Rogers knew you could be" # Tagline or motto
+$Script:CompanyName = "MyCompany" # Company name
+$Script:CompanyLogo = "https://MyDomain.TLD/email-logo.gif" # Public URL to company logo
 
 
 ### Script Starts - Go No Further ###############
@@ -147,30 +152,39 @@ Function OWASigs {
 		ForEach ($SignatureUser in $UserDetails) {
 			#Generated Signature
 			$Signature = @()
+			$UserFullName = $SignatureUser.Name
+			$UserTitle = $SignatureUser.Title
+			If ($SignatureUser.telephoneNumber) { $OfficePhone = $SignatureUser.telephoneNumber } Else { $OfficePhone = $Null }
 			If ($SignatureUser.mobile) { $Mobile = $SignatureUser.mobile } Else { $Mobile = $Null }
+			# Requires custom AD attribute called 'awsChime' in the user attributes
+			If ($SignatureUser.awsChime) { $AwsChime = $SignatureUser.awsChime } Else { $AwsChime = $Null }
+			$UserEmail = $SignatureUser.emailAddress
 
-			# Find the PS-*-* fields and replace those with the appropriate details.
-			ForEach ($line in $SignatureTemplate) {
-				If ($line -like "*PS-USER-NAME*") {
-					$Signature += $line.Replace("PS-USER-NAME","$($SignatureUser.Name)")
+			$Signature += "<br>"
+			$Signature += "<hr size=`"3`" width=`"33%`" align=`"left`">"
+			$Signature += "<div style=`"font-size:10pt;  font-family: 'Calibri',sans-serif;`">"
+			$Signature += "<b><span style='font-size:14.0pt;color:#D34727'>$UserFullName</span></b><br>"
+			$Signature += "<span style='text-transform:uppercase'>$UserTitle</span><br>"
+			$Signature += "<div><img alt=`"$CompanyName`"  src=`"$CompanyLogo`"></div>"
+			If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null)) {
+				$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Office - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$OfficePhone</span>"
 				}
-				ElseIf ($line -like "*PS-TITLE-NAME*") {
-					$Signature += $line.Replace("PS-TITLE-NAME","$($SignatureUser.Title)")
+			If (($OfficePhone -ne "") -AND ($OfficePhone -ne $Null) -AND ($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+				$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
 				}
-				ElseIf ($line -like "*PS-OFFICE-PHONE*") {
-					$Signature += $line.Replace("PS-OFFICE-PHONE","$($SignatureUser.telephoneNumber)")
+			If (($Mobile -ne "") -AND ($Mobile -ne $Null)) {
+				$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Cell - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$Mobile</span></span>"
 				}
-				ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -ne "" -AND $Mobile -ne $Null)) {
-					$Signature += $line.Replace("PS-MOBILE-PHONE",$Mobile)
+			If (($AwsChime -ne "") -AND ($AwsChime -ne $Null)) {
+				$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'> | </span></i>"
+				$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>Cell - </span></i><span style='font-size:10.0pt'><span style='color:#000001; text-decoration:none;text-underline:none'>$AwsChime</span></span>"
 				}
-				ElseIf ($line -like "*PS-MOBILE-PHONE*" -AND ($Mobile -eq "" -OR $Mobile -eq $Null)) {
-					Write-Output "$($SignatureUser.Name) - No Mobile Phone Number"
-				}
-				ElseIf ($line -like "*PS-EMAIL-ADDR*") {
-					$Signature += $line.Replace("PS-EMAIL-ADDR","$($SignatureUser.emailaddress)")
-				}
-				Else { $Signature += $line }
+			$Signature += "<br><span style='font-size:10.0pt;text-transform:lowercase'>$UserEmail | <a href=`"$SocialMediaURL`"><span style='text-transform:uppercase;color:#000001'>$SocialMediaTitle</span></a> | <a href=`"$WebsiteURL`"><b>$WebsiteDomain</b></a></span><br>"
+			$Signature += "<br>"
+			$Signature += "<i><span style='font-size:8.0pt;font-family:`"Georgia`",serif'>$Motto</span></i> <o:p></o:p></p>"
+			$Signature += "</div>"
 			}
+			
 			Set-MailboxMessageConfiguration $SignatureUser.userPrincipalName -SignatureHtml $Signature -AutoAddSignature $True -AutoAddSignatureOnMobile $True -AutoAddSignatureOnReply $True -DefaultFontColor "#000000" -UseDefaultSignatureOnMobile $True
 			Write-Host "Signatures should be created for $($SignatureUser.userPrincipalName). Please check OWA to verify." -ForegroundColor Green
 		}
