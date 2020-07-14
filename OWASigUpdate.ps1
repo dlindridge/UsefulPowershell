@@ -147,7 +147,7 @@ Function OWASigs {
 
 	ForEach ($User in $Users) {
 		$UPN = $User.UserName
-		$UserDetails = Get-ADUser -Filter * -Properties * | Where-Object {$_.SamAccountName -eq $UPN} | Select-Object name,title,emailaddress,telephoneNumber,mobile,userPrincipalName
+		$UserDetails = Get-ADUser -Filter * -Properties * | Where-Object {$_.SamAccountName -eq $UPN} | Select-Object name,title,emailaddress,telephoneNumber,mobile,userPrincipalName,awsChime
 
 		ForEach ($SignatureUser in $UserDetails) {
 			#Generated Signature
