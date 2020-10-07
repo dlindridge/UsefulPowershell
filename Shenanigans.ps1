@@ -33,12 +33,13 @@ Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
 https://github.com/dlindridge/UsefulPowershell
 Created: September 17, 2019
-Modified: October 20, 2019
+Modified: October 7, 2020
 #>
 #################################################
 
 	Param (
-		$Testing = "YES"
+		$Testing = "YES",
+		$TestAddress
 	)
 
 ### Script Options ##############################
@@ -60,7 +61,6 @@ $deleteExempt = "DO-NOT-DELETE" # Text used in object description to exempt it f
 $Path = "C:\Scripts\ADMaintenance" # Path to output for consolidation and emailing.
 $fromAddr = "MyCompany IT <noreply@MyDomain.TLD>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
 $toAddr = "itadmins@MyDomain.TLD" # Enter the TO address for the e-mail alert - Must be inside quotes.
-$testingAddr = "john.doe@MyDomain.TLD" # Email address to send reports and alerts to when testing.
 $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
 
 ### Enable Script Actions (YES or NO) ##############
@@ -125,7 +125,11 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 	$createdDate = (Get-Date).AddDays(-$timeSinceCreation)
 	$deleteTime = (Get-Date).AddDays(-$deleteDays)
 	$body = @("These tasks were run today, $actionDate. For full details please check out the attached CSV files.<br /><br />")
-	if ($Testing -eq "YES") { $toAddr = $testingAddr }
+	If ($Testing -eq "YES" -AND ($TestAddress -eq $Null -OR $TestAddress -eq "")) {
+		Write-Host -ForegroundColor Red "Need address to send test reports to: " -NoNewLine
+		$TestAddress = Read-Host
+	}
+	if ($Testing -eq "YES") { $toAddr = $TestAddress }
 
 
 ### Pick A Quote ################################
@@ -159,7 +163,7 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 		"A clear conscience is usually the sign of a bad memory. -Steven Wright",
 		"Every man is guilty of all the good he did not do. -Voltaire",
 		"When I die, I want to die like my grandfather who died peacefully in his sleep. Not screaming like all the passengers in his car. -Will Rogers",
-		"It's like déjà vu all over again. -Yogi Berra",
+		"It's like deja vu all over again. -Yogi Berra",
 		"You better cut the pizza in four pieces because I'm not hungry enough to eat six. -Yogi Berra",
 		"I'm about to do to you what Limp Bizkit did to music in the late '90s. -Deadpool <i>Deadpool</i>",
 		"Leave the gun. Take the cannoli. -Peter Clemenza <i>The Godfather</i>",
@@ -316,7 +320,7 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 					$LastLogon = $Date.AddYears(1600).ToLocalTime()
 				}
 				# Gets owner email from object Description field and composes email message
-				if (($expiringCompsEmail) -Like $emailPattern) {
+				if (($expiringCompsEmail) -Like "*coriosgroup.com") {
 					$expiringCompsSubject="Your Computer Has Not Checked In Recently"
 					$eCompsbody = "
 						<span style='font-family:calibri;'>
@@ -391,7 +395,7 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 		Write-Host -ForegroundColor Green "Removing inactive user accounts..." -NoNewLine
 		# Get user accounts that have not signed in to the domain in a certain amount of time and disable them
 		$inactiveUsersTime = (get-date).adddays(-$inactiveDays)
-		$inactiveUsersSearch = Get-ADDomainController -Server $domain -Filter * | ForEach-Object { Get-ADUser -Server $_.Hostname -SearchBase $searchRoot -Filter {((LastLogon -notlike "*" -OR LastLogon -le $inactiveUsersTime) -AND (PasswordLastSet -le $inactiveUsersTime) -OR (whenCreated -ge $createdDate)) -AND (Enabled -eq $True)} -Properties * | Where-Object {$_.description -notmatch $disableExempt} | Sort-Object Name }
+		$inactiveUsersSearch = Get-ADDomainController -Server $domain -Filter * | ForEach-Object { Get-ADUser -Server $_.Hostname -SearchBase $searchRoot -Filter {((LastLogon -notlike "*" -OR LastLogon -le $inactiveUsersTime) -AND (PasswordLastSet -le $inactiveUsersTime) -AND (whenCreated -le $createdDate)) -AND (Enabled -eq $True)} -Properties * | Where-Object {$_.description -notmatch $disableExempt} | Sort-Object Name }
 		$inactiveUsers = ForEach ($searchEntry in $inactiveUsersSearch | Group-Object SamAccountName){ $searchEntry.Group | Sort-Object -Property LastLogon -Descending | Select-Object -First 1 }
 		if ($inactiveUsers -ne $Null) {
 			# Create the CSV for the report
@@ -446,7 +450,7 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 				$expireOnDate = (Get-Date $user.AccountExpirationDate -UFormat "%A, %d %B, %Y")
 
 				# If Testing Is Enabled - Email Administrator
-				if ($testing -eq "YES") { $emailAddress = $testingAddr }
+				if ($testing -eq "YES") { $emailAddress = $TestAddress }
 				else { $emailAddress = $user.Mail } 
 
 				# Check Number of Days to Expiry
