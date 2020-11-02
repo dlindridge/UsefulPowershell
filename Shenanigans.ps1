@@ -33,13 +33,12 @@ Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
 https://github.com/dlindridge/UsefulPowershell
 Created: September 17, 2019
-Modified: October 7, 2020
+Modified: November 2,2020
 #>
 #################################################
 
 	Param (
 		$Testing = "YES",
-		$TestAddress
 	)
 
 ### Script Options ##############################
@@ -61,6 +60,7 @@ $deleteExempt = "DO-NOT-DELETE" # Text used in object description to exempt it f
 $Path = "C:\Scripts\ADMaintenance" # Path to output for consolidation and emailing.
 $fromAddr = "MyCompany IT <noreply@MyDomain.TLD>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
 $toAddr = "itadmins@MyDomain.TLD" # Enter the TO address for the e-mail alert - Must be inside quotes.
+$TestAddress = "someone@MyDomain.TLD" # Enter the email address test emails will be sent to.
 $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must be inside quotes.
 
 ### Enable Script Actions (YES or NO) ##############
