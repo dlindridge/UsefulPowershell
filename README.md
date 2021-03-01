@@ -6,6 +6,10 @@ symbol.ico and background.jpg are included for optional decoration on GUI forms.
 
 ####################
 
+### ADTempGroup-GUI.ps1 ### (GUI Form)
+
+Scans for any domains in your Forest and creates a group in a specified domain that will expire and delete at a set time. Server2019+ AD Domains support natively temporary groups to allow users to get access to resources they won't need long term. Server 2008R2+ AD Domains allow dynamic groups with a TTL, but do not provide and easy way to create them. This script bridges that gap.
+
 ### CleanSlateProtocol.ps1 ### (Command Line)
 Looks for when a specific user last logged in then deletes the contents of the specified directory if the designated number of days has passed. If you provide a valid address to send to, warnings will be sent starting 4 days before the event. All Domain Controllers are queried to get the most recent login date.
 
