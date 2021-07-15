@@ -16,9 +16,8 @@ Tuesday recommended.
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
-https://github.com/dlindridge/UsefulPowershell
 Created: May 22, 2020
-Modified: September 11, 2020
+Modified: July 15, 2020
 #>
 
 ### Email Settings ##############################
@@ -29,7 +28,7 @@ $smtpServer = "smtp.MyDomain.TLD" # Enter the FQDN or IP of a SMTP relay - Must 
 
 
 ### Options #####################################
-$Testing = "YES" #Testing mode to avoid spamming your group
+$Testing = "NO" #Testing mode to avoid spamming your group
 $AnnualPolicyAcknowledgement = "YES" #Reminder to send annual policy review confirmation
 $FirewallReview = "YES" #Reminder to review firewall rules
 	$FRFrequency = "EVEN" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
@@ -38,7 +37,9 @@ $AwarenessEmails = "YES" #Reminder to send awareness/training emails
 $AccessReview = "YES" #Reminder to perform access reviews
 	$ACFrequency = "EVEN" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
 $VulnScans = "YES" #Reminder to download and save vulnerability scans
-	$VulnFrequency = "2" #Which Monday of each month
+	$VulnFrequency = "QUARTERLY" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
+$BackupRestore = "YES" #Reminder to perform a backup restore test and document the results
+	$BackupRestoreFrequency = "QUARTERLY" #How often - Yearly, Even (even numbered quarters), Odd (odd numbered quarters), Quarterly
 $OffWeeks = "YES" #Send an update email when nothing is due?
 
 
@@ -52,6 +53,8 @@ $AccessReview = $AccessReview.ToUpper()
 $ACFrequency = $ACFrequency.ToUpper()
 $VulnScans = $VulnScans.ToUpper()
 $OffWeeks = $OffWeeks.ToUpper()
+$BackupRestore = $OffWeeks.ToUpper()
+$BackupRestoreFrequency = $OffWeeks.ToUpper()
 
 
 ### Necessary Transforms ########################
@@ -147,23 +150,58 @@ If ($AccessReview -eq "YES") {
 
 ### Vulnerability Reports #######################
 If ($VulnScans -eq "YES") {
-	Function IsDayOfMonth ([int]$Month, [int]$Year, $weekday, $firstsecondthirdorfourthdayofmonth) {
-		$NameOfMonth = (Get-Culture).DateTimeFormat.GetMonthName($month)
-		[int]$Day = 1
-		While((Get-Date -Day $Day -Hour 0 -Millisecond 0 -Minute 0 -Month $Month -Year $Year -Second 0).DayOfWeek -ne $weekday) {
-			$day++
+	If ($VulnFrequency -eq "YEARLY") {
+		If ($weekNumber -eq 2) {
+			$emailBody += "<b>Vulnerability Scans:</b> Download and save vulnerability scan reports.<br /><br />"
+			$actionCount += 1
 		}
-		If ($firstsecondthirdorfourthdayofmonth -eq 2) {$day += 7}
-		If ($firstsecondthirdorfourthdayofmonth -eq 3) {$day += 14}
-		If ($firstsecondthirdorfourthdayofmonth -eq 4) {$day += 21}
-
-		return (Get-Date -Day $Day -Hour 0 -Millisecond 0 -Minute 0 -Month $Month -Year $Year -Second 0 -format D)
 	}
+	If ($VulnFrequency -eq "EVEN") {
+		If (($weekNumber -eq 16) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Vulnerability Scans:</b> Download and save vulnerability scan reports.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($VulnFrequency -eq "ODD") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 29)) {
+			$emailBody += "<b>Vulnerability Scans:</b> Download and save vulnerability scan reports.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($VulnFrequency -eq "QUARTERLY") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 16) -OR ($weekNumber -eq 29) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Vulnerability Scans:</b> Download and save vulnerability scan reports.<br /><br />"
+			$actionCount += 1
+		}
+	}
+}
 
-	$datum = get-date
-	If ((IsDayOfMonth $datum.month $datum.year Monday $VulnFrequency) -eq (Get-Date -Format D)) {
-		$emailBody += "<b>Vulnerability Scans:</b> Download and save vulnerability scan reports for this month.<br /><br />"
-		$actionCount += 1
+
+### Backup Restore ##############################
+If ($BackupRestore -eq "YES") {
+	If ($BackupRestoreFrequency -eq "YEARLY") {
+		If ($weekNumber -eq 2) {
+			$emailBody += "<b>Backup Restore Test:</b> Schedule the yearly backup restore test. Document with a Service Desk ticket.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($BackupRestoreFrequency -eq "EVEN") {
+		If (($weekNumber -eq 16) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Backup Restore Test:</b> Schedule the bi-yearly backup restore test. Document with a Service Desk ticket.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($BackupRestoreFrequency -eq "ODD") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 29)) {
+			$emailBody += "<b>Backup Restore Test:</b> Schedule the bi-yearly backup restore test. Document with a Service Desk ticket.<br /><br />"
+			$actionCount += 1
+		}
+	}
+	If ($BackupRestoreFrequency -eq "QUARTERLY") {
+		If (($weekNumber -eq 2) -OR ($weekNumber -eq 16) -OR ($weekNumber -eq 29) -OR ($weekNumber -eq 42)) {
+			$emailBody += "<b>Backup Restore Test:</b> Schedule the quarterly backup restore test. Document with a Service Desk ticket.<br /><br />"
+			$actionCount += 1
+		}
 	}
 }
 
