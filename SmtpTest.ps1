@@ -1,26 +1,25 @@
-<#
-	.SYNOPSIS
-	Sends a test email to address specified.
+    <#
+        .SYNOPSIS
+        Sends a test email to address specified.
 
-	.PARAMETER Server
-	The SMTP server name - FQDN recommended.
+        .PARAMETER Server
+        The SMTP server name - FQDN recommended.
 
-	.PARAMETER Recipient
-	The destination email address.
+        .PARAMETER Recipient
+        The destination email address.
 
-	.DESCRIPTION
-	Usage: .\SmtpTest.ps1 (-Server smtprelay.somedomain.net)
-#>
+		.DESCRIPTION
+		Usage: .\SmtpTest.ps1 (-Server smtprelay.somedomain.net)
+    #>
 
 #################################################
 <#
-Just a simple SMTP relay test to validate your relay settings.
+Simple SMTP relay test to validate your relay settings.
 
 Author: Derek Lindridge
 https://www.linkedin.com/in/dereklindridge/
-https://github.com/dlindridge/UsefulPowershell
 Created: September 7, 2017
-Modified: October 23, 2019
+Modified: October 6, 2022
 #>
 #################################################
 
@@ -32,10 +31,13 @@ Modified: October 23, 2019
 
 ######################
 
+$LocalHost = Get-Content ENV:ComputerName
+
 $From = "SMTP Test <noreply@mydomain.tld>" # Enter the FROM address for the e-mail alert - Must be inside quotes.
 
 $body = "<p style='font-family:calibri'>This is a test of your SMTP relay settings and authorizations on $Server.</p>
-		<p style='font-family:calibri'>If you are reading this, it worked.</p>"
+		<p style='font-family:calibri'>If you are reading this, it worked.</p>
+		<p style='font-family:calibri'>This test was run from $LocalHost.</p>"
 
 Send-MailMessage -To $Recipient -From $From -Subject "Info: SMTP Relay Test" -Body "$body" -SmtpServer $Server -BodyAsHtml
 
